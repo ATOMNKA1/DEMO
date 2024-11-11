@@ -1,5 +1,5 @@
 #Подсказки 
-#pip instal fastapi, pip install uvicorn
+#pip install fastapi, pip install uvicorn
 #uvicorn app:app --m reload
 
 import datetime
@@ -15,6 +15,7 @@ class Order(BaseModel):
     client : str
     status : str
 
+repo = []
 
 app = FastAPI()
 
