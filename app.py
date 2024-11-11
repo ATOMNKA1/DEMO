@@ -1,6 +1,6 @@
 #Подсказки 
 #pip install fastapi, pip install uvicorn
-#uvicorn app:app --m reload
+#uvicorn app:app --reload
 
 import datetime
 from fastapi import FastAPI
@@ -15,10 +15,20 @@ class Order(BaseModel):
     client : str
     status : str
 
-repo = []
+repo = [
+    Order(
+        number = 1,
+        startDate = "2024-11-11",
+        device = "Телефон",
+        problemType = "поломка экрана",
+        description = "трещина",
+        client = "Иван Иванович Иванов",
+        status = "В обработке"
+    )
+]
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return "Привет мир!"
+@app.get("/orders")
+def get_orders():
+    return repo
