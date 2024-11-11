@@ -44,3 +44,16 @@ def get_orders():
 @app.post("/orders")
 def post_orders(dto : Annotated[Order, Form()]):
     repo.append(dto)
+
+@app.post("/update")
+def update_order(dto : Annotated[UpdateOrderDTO, Form()]):
+    for o in repo:
+        if o.number == dto.number:
+            if dto.status != o.status and dto.status != "":
+                o.status = dto.status
+            if dto.description != o.description and dto.description != "":
+                o.description = dto.description
+            if dto.master != o.master and dto.master != "":
+                o.master = dto.master
+            return 0
+    return "Заявка не найдена"
