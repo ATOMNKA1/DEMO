@@ -1,9 +1,10 @@
 #Подсказки 
-#pip install fastapi, pip install uvicorn
+#pip install fastapi, pip install uvicorn, pip install python-multipart
 #uvicorn app:app --reload
 
 import datetime
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import FastAPI, Form
 from pydantic import BaseModel
 
 class Order(BaseModel):
@@ -32,3 +33,7 @@ app = FastAPI()
 @app.get("/orders")
 def get_orders():
     return repo
+
+@app.post("/orders")
+def post_orders(dto : Annotated[Order, Form()]):
+    repo.append(dto)
