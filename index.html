@@ -9,12 +9,14 @@
     <a href="update.html">Обновление заявки</a>
     <iframe nume="frame" style="display: none;"></iframe>
     <form target="frame" action="http://127.0.0.1:8000/orders" method="post">
-        <input required  placeholder="number" type="number" name="number" /> 
-        <input required  placeholder="startDate" type="date" name="startDate" />
-        <input required  placeholder="device" type="text" name="device" />
-        <input required  placeholder="problemType" type="text" name="problemType" />
-        <input required  placeholder="description" type="text" name="description" />
-        <input required  placeholder="client" type="text" name="client" />
+        <input required  placeholder="Номер" type="number" name="number" /> 
+        <label for="startDate">Дата добавления</label>
+        <input type="date" name="startDate" />
+        <input required  placeholder="Устройство" type="text" name="device" />
+        <input required  placeholder="Тип проблемы" type="text" name="problemType" />
+        <input required  placeholder="Описание" type="text" name="description" />
+        <input required  placeholder="Клиент" type="text" name="client" />
+        <label for="status">Статус</label>
         <select name="status">
             <option value="">В ожидании</option>
             <option value="">В работе</option>
@@ -22,5 +24,13 @@
         </select>
         <input type="submit" value="Создание">
     </form>
+    <style> 
+        form{
+        display: flex;
+        flex-direction: column;
+        width: 15%;
+         gap: 5px;
+        }
+    </style>
 </body>
 </html>

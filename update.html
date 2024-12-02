@@ -11,11 +11,11 @@
     <a href="update.html">Обновление заявки</a>
     <iframe name="frame" style="display: none;"></iframe>
     <form target="frame" action="http://127.0.0.1:8000/update" method="post">
-        <input placeholder="number" type="number" name="number" />
-        <input placeholder="description" type="text" name="description" />
-        <input placeholder="master" type="text" name="master" />
-        <input placeholder="comments" type="text" name="comment" />
-        <label for="status">status</label>
+        <input placeholder="Номер" type="number" name="number" />
+        <input placeholder="Описание" type="text" name="description" />
+        <input placeholder="Мастер" type="text" name="master" />
+        <input placeholder="Коментарий" type="text" name="comment" />
+        <label for="status">Статус</label>
         <select name="status">
             <option></option>
             <option>Не выполнено</option>
@@ -25,5 +25,13 @@
         <input type="submit" value="Редактирование">
     </form>
 </body>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 15%;
+            gap: 5px;
+        }
+    </style>
 
 </html>
