@@ -17,12 +17,14 @@ class Order(BaseModel):
     client : str
     status : str
     master : Optional[str] = "Не назначен"
+    comments : Optional[str] = []
 
 class UpdateOrderDTO(BaseModel):
     number : int
     status : Optional[str] = ""
     description : Optional[str] = ""
     master : Optional[str] = ""
+    comment : Optional[str] = str
 
 repo = [
     Order(
@@ -78,9 +80,13 @@ def update_order(dto : Annotated[UpdateOrderDTO, Form()]):
             if dto.status != o.status and dto.status != "":
                 o.status = dto.status
                 message += f"Статус заявки №{o.number} изменён на: {dto.status} \n"
+                if (o.status == "Выполнено"):
+                    message += f"Заявка №{o.number} Завершена\n"
             if dto.description != o.description and dto.description != "":
                 o.description = dto.description
             if dto.master != o.master and dto.master != "":
                 o.master = dto.master
+            if dto.comment != None and dto.comment !="":
+                o.comments.append(dto.comment)
             return 0
     return "Заявка не найдена"

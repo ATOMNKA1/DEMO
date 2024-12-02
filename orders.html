@@ -23,6 +23,7 @@
                 <th>Клиент</th>
                 <th>Статус заявки</th>
                 <th>Мастер</th>
+                <th>Коментарии</th>
             </tr>
         </thead>
         <tbody>
@@ -51,7 +52,8 @@
                     <td>${o.description}</td>
                     <td>${o.client}</td>
                     <td>${o.status}</td>
-                    <td>${o.master}</td> `;
+                    <td>${o.master}</td> 
+                    <td>${o.comments}</td>`;
 
                 table.append(tr);
             });
@@ -65,23 +67,6 @@
         }
 
     </script>
-    <style>
-        th,
-        td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #2fca29;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
 </body>
 
 </html>
