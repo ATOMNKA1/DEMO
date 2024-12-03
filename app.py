@@ -16,8 +16,9 @@ class Order(BaseModel):
     description : str
     client : str
     status : str
+    endDate : Optional[datetime.date] = None
     master : Optional[str] = "Не назначен"
-    comments : Optional[str] = []
+    comments : Optional[list] = []
 
 class UpdateOrderDTO(BaseModel):
     number : int
@@ -82,6 +83,7 @@ def update_order(dto : Annotated[UpdateOrderDTO, Form()]):
                 message += f"Статус заявки №{o.number} изменён на: {dto.status} \n"
                 if (o.status == "Выполнено"):
                     message += f"Заявка №{o.number} Завершена\n"
+                    o.endDate = datetime.datetime.now()
             if dto.description != o.description and dto.description != "":
                 o.description = dto.description
             if dto.master != o.master and dto.master != "":
@@ -90,3 +92,34 @@ def update_order(dto : Annotated[UpdateOrderDTO, Form()]):
                 o.comments.append(dto.comment)
             return 0
     return "Заявка не найдена"
+
+def complete_count():
+    a = [o for o in repo if o.status == "Выполнено"]
+    return len(a)
+
+def get_problem_type_stat():
+    dict = {}
+    for o in repo:
+        if o.problemType in dict.keys():
+            dict[o.problemType] += 1
+        else:
+            dict[o.problemType] = 1
+    return dict
+
+def get_average_time_to_complete():
+    times = [(
+        datetime.datetime(o.endDate.year, o.endDate.month, o.endDate.day)
+        - datetime.datetime(o.startDate.year, o.startDate.month, o.startDate.day)).days
+              for o in repo 
+              if o.status == "Выполнено"]
+    if complete_count() != 0:
+        return sum(times)/complete_count()
+    return 0
+            
+@app.get("/statistics")
+def get_statistics():
+    return {
+        "complete_count" : complete_count(),
+        "get_problem_type_stat" : get_problem_type_stat(),
+        "get_average_time_to_complete" : get_average_time_to_complete()
+    }
