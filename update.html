@@ -34,5 +34,9 @@
             gap: 5px;
         }
     </style>
+    <script>
+        if (!sessionStorage.getItem("token"))
+            window.location.href = "auth.html"
+    </script>    
 
 </html>

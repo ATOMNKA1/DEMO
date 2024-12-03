@@ -58,4 +58,8 @@
             }
         }
     </script>
+    <script>
+        if (!sessionStorage.getItem("token"))
+            window.location.href = "auth.html"
+    </script>
 </html>
