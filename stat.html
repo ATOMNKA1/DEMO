@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статистика</title>
+</head>
+<body>
+    <a href="index.html">Создание заявки</a>
+    <a href="orders.html">Список заявок</a>
+    <a href="update.html">Обновление заявки</a>
+    <a href="stat.html">Статистика</a><br>
+        Количество выполненных заявок: 
+            <span id = "complete_count"></span><br>
+        Среднее время выполнения заявок: 
+            <span id="average_time_complete">дней </span><br>
+        <h3>Статистика по типам неисправностей:</h3><br>
+        <table>
+            <thead>
+                <th>Тип неисправности</th>
+                <th>Количество</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        
+</body>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 15%;
+            gap: 5px;
+        }
+    </style>
+    <script>
+        let complete_count = document.getElementById("complete_count"); 
+        let average_time_complete = document.getElementById("average_time_complete")
+        let stat_table = document.querySelector("tbody");
+
+        get_statistics();
+
+        async function get_statistics()
+        {
+            let data = await fetch("http://localhost:8000/statistics");
+            let stat = await data.json();
+
+            complete_count.append(stat.complete_count);
+            average_time_complete.append(stat.get_average_time_to_complete);
+            
+            for (var key of Object.keys(stat.get_problem_type_stat)) {
+                let tr = document.createElement("tr");
+                tr.innerHTML = `
+                <td>${key}</td>
+                <td>${stat.get_problem_type_stat[key]}</td>`;
+                
+                stat_table.append(tr);
+                
+            }
+        }
+    </script>
+</html>
